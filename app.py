@@ -1,11 +1,11 @@
 from flask import Flask, request
-from utils import generater_random_password
+from utils import generater_random_password, reading_requirements
 
 app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return ' Hello, World!'
+    return 'Hello, World!'
 
 @app.route('/generate-password/')
 def generate_password():
@@ -19,6 +19,11 @@ def generate_password():
         return "Password should be less then 100"
 
     return generater_random_password(password_len)
+
+@app.route('/requirements/')
+def reading_file():
+    return reading_requirements()
+
 
 if __name__ == "__main__":
     app.run(debug=True)
