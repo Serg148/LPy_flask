@@ -1,5 +1,6 @@
 from flask import Flask, request
-from utils import generater_random_password, reading_requirements
+from utils import *
+
 
 app = Flask(__name__)
 
@@ -23,6 +24,16 @@ def generate_password():
 @app.route('/requirements/')
 def reading_file():
     return reading_requirements()
+
+@app.route('/generate-users/')
+
+def generate_users_list():
+    users = request.args.get("users", "100")
+    if not users.isdigit():
+        return "Error, users should be integer"
+    users = int(users)
+
+    return generate_users(users)
 
 
 if __name__ == "__main__":

@@ -1,5 +1,6 @@
 import random
 import string
+from faker import Faker
 
 
 def generater_random_password(password_len=10) -> str:
@@ -11,7 +12,16 @@ def generater_random_password(password_len=10) -> str:
         result += random.choice(chars)
      return result
 
-def reading_requirements():
+
+def reading_requirements() -> str:
     file = open("requirements.txt")
     file = file.read()
     return file
+
+
+fake = Faker()
+def generate_users(users) -> str:
+    users_list = ""
+    for _ in range(users):
+        users_list += f"({fake.first_name()}  {fake.ascii_email()})"
+    return users_list
