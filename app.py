@@ -1,13 +1,13 @@
-from flask import Flask
+from flask import Flask, request
 from utils import *
-import requests
-
 
 app = Flask(__name__)
+
 
 @app.route('/')
 def hello_world():
     return 'Hello, World!'
+
 
 @app.route('/generate-password/')
 def generate_password():
@@ -21,12 +21,13 @@ def generate_password():
         return "Password should be less then 100"
     return generater_random_password(password_len)
 
+
 @app.route('/requirements/')
 def reading_file():
     return reading_requirements()
 
-@app.route('/generate-users/')
 
+@app.route('/generate-users/')
 def generate_users_list():
     users = request.args.get("users", "100")
     if not users.isdigit():
@@ -34,10 +35,10 @@ def generate_users_list():
     users = int(users)
     return generate_users(users)
 
+
 @app.route('/space/')
 def space_read():
-    r = requests.get('http://api.open-notify.org/astros.json')
-    return str(r.json()["number"])
+    return people_in_space()
 
 
 if __name__ == "__main__":
