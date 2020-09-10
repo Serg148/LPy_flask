@@ -1,5 +1,6 @@
-from flask import Flask, request
+from flask import Flask
 from utils import *
+import requests
 
 
 app = Flask(__name__)
@@ -18,7 +19,6 @@ def generate_password():
 
     if password_len > 100:
         return "Password should be less then 100"
-
     return generater_random_password(password_len)
 
 @app.route('/requirements/')
@@ -32,8 +32,12 @@ def generate_users_list():
     if not users.isdigit():
         return "Error, users should be integer"
     users = int(users)
-
     return generate_users(users)
+
+@app.route('/space/')
+def space_read():
+    r = requests.get('http://api.open-notify.org/astros.json')
+    return str(r.json()["number"])
 
 
 if __name__ == "__main__":
