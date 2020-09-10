@@ -1,12 +1,13 @@
 from flask import Flask, request
 from utils import *
 
-
 app = Flask(__name__)
+
 
 @app.route('/')
 def hello_world():
     return 'Hello, World!'
+
 
 @app.route('/generate-password/')
 def generate_password():
@@ -18,22 +19,26 @@ def generate_password():
 
     if password_len > 100:
         return "Password should be less then 100"
-
     return generater_random_password(password_len)
+
 
 @app.route('/requirements/')
 def reading_file():
     return reading_requirements()
 
-@app.route('/generate-users/')
 
+@app.route('/generate-users/')
 def generate_users_list():
     users = request.args.get("users", "100")
     if not users.isdigit():
         return "Error, users should be integer"
     users = int(users)
-
     return generate_users(users)
+
+
+@app.route('/space/')
+def space_read():
+    return people_in_space()
 
 
 if __name__ == "__main__":
